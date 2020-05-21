@@ -1,5 +1,7 @@
 <template>
 	<div>
+		<h1>Let's Tango!</h1>
+		<router-link to="/add">Add word</router-link>
 		<div id="previous" v-if="previousWord">
 	      <p>{{ previousWord.english }}</p>
 	      <p>{{ previousWord.japanese }}</p>
@@ -10,7 +12,14 @@
 	    <div id="next" v-if="words.length > 0">
 	      <p>{{ words[0].english }}</p>
 	      <p>{{ words[0].englishExample }}</p>
-	      <input type="text" v-model="textInput" /><button v-on:click="checkResponse(textInput)">OK</button>
+	      <div class="form-row align-items-center">
+		    <div class="col-auto">
+			  <input type="text" class="form-control mb-2" v-model="textInput">
+			</div>
+			<div class="col-auto">
+			  <button @click="checkResponse(textInput)" class="btn btn-primary mb-2">OK</button>
+			</div>
+		  </div>
 	    </div>
 	    <div id="done" v-else>
 	      Done for now!
