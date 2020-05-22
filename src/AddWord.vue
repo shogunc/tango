@@ -7,34 +7,34 @@
 				<input type="text" 
 				       class="form-control" 
 				       id="inputEnglish" 
-				       v-model="inputData.english">
+				       v-model="word.english">
 			</div>
 			<div class="form-group">
 				<label for="inputEnglishExample">Exempel (engelska)</label>
 				<input type="text" 
 				       class="form-control" 
 				       id="inputEnglishExample" 
-				       v-model="inputData.englishExample">
+				       v-model="word.englishExample">
 			</div>
 			<div class="form-group">
 				<label for="inputJapanese">Romaji</label>
 				<input type="text" 
 				       class="form-control" 
 				       id="inputJapanese" 
-				       v-model="inputData.japanese">
+				       v-model="word.japanese">
 			</div>
 			<div class="form-group">
 				<label for="inputKana">Kana</label>
 				<input type="text" 
 				       class="form-control" 
 				       id="inputKana" 
-				       v-model="inputData.kana">
+				       v-model="word.kana">
 			</div>
 			<div class="form-group">
 				<label for="inputJapaneseExample">Exempel (japanska)</label>
 				<input type="text" 
 				       class="form-control" 
-				       id="inputJapaneseExample" v-model="inputData.japaneseExample">
+				       id="inputJapaneseExample" v-model="word.japaneseExample">
 			</div>
 		</form>
 		<button type="submit" 
@@ -50,19 +50,27 @@
 	export default {
 		data () {
 			return {
-				inputData: {
+				word: {
 					english: '',
 					englishExample: '',
 					japanese: '',
 					japaneseExample: '',
-					kana: ''	
+					kana: '',
+					streak: 0,
+					lastQuery: ''
 				}
 			}
 		},
 		methods: {
 			submit: function () {
-				console.log('Sending...')
-				console.log(this.inputData.english)
+				this.word.lastQuery = new Date()
+				this.$http.post('words.json', this.word)
+				.then(response => {
+					console.log(response)
+				}, error => {
+					console.log(error)
+				})
+
 			},
 			goHome: function () {
 				this.$router.push('/')
