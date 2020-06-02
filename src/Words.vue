@@ -9,9 +9,9 @@
 	      <p>{{ previousWord.fbData.japaneseExample }}</p>
 	      <p>{{ previousWord.correct ? 'Correct!' : 'Incorrect...' }}</p>
 	    </div>
-	    <div id="next" v-if="words.length > 0">
-	      <p>{{ words[0].fbData.english }}</p>
-	      <p>{{ words[0].fbData.englishExample }}</p>
+	    <div id="next" v-if="filteredWords.length > 0">
+	      <p>{{ filteredWords[0].fbData.english }}</p>
+	      <p>{{ filteredWords[0].fbData.englishExample }}</p>
 	      <div class="form-row align-items-center">
 		    <div class="col-auto">
 			  <input type="text" class="form-control mb-2" v-model="textInput">
@@ -36,6 +36,37 @@
       textInput: ''
     }
   },
+  computed: {
+    filteredWords () {
+      const second = 1000;
+      const minute = 60 * second;
+      const hour = 60 * minute;
+      const day = 24 * hour;
+
+      return this.words.filter(word => {
+        switch (word.fbData.streak) {
+          case 0: 
+            return true;
+          case 1: 
+            return this.timeSinceLastQuery(word) > 1 * minute;
+          case 2: 
+            return this.timeSinceLastQuery(word) > 2 * minute;
+          case 3: 
+            return this.timeSinceLastQuery(word) > 3 * minute;
+          case 4: 
+            return this.timeSinceLastQuery(word) > 4 * minute;
+          case 5: 
+            return this.timeSinceLastQuery(word) > 5 * minute;
+          case 6: 
+            return this.timeSinceLastQuery(word) > 6 * minute;
+          case 7: 
+            return this.timeSinceLastQuery(word) > 7 * minute;
+          default:
+            return this.timeSinceLastQuery(word) > 8 * minute;
+        }
+      })
+    }
+  },
   mounted () {
     this.fetchWords();
   },
@@ -56,24 +87,6 @@
         	this.words = resultArray;
         	console.log(this.words);
         })
-      // return [{
-      //   english: 'Direct flight',
-      //   englishExample: 'Direct flights between New York and Tokyo commenced recently.',
-      //   japanese: '直行便',
-      //   japaneseExample: 'ニューヨーク・東京間の直行便が最近開始された。',
-      //   romaji: 'chokkoubin',
-      //   streak: 0,
-      //   lastQuery: new Date()
-      // },
-      // {
-      //   english: 'Postponement',
-      //   englishExample: 'The baseball game was put off till next Sunday.',
-      //   japanese: '延期',
-      //   japaneseExample: '野球の試合は来週の日曜日まで延期された。',
-      //   romaji: 'enki',
-      //   streak: 0,
-      //   lastQuery: new Date()
-      // }]
     },
     checkResponse (response) {
       this.updateWord(this.words[0], response);
@@ -102,6 +115,9 @@
         }, error => {
 		  console.log(error)
 		})
+    },
+    timeSinceLastQuery (word) {
+      return Date.now() - Date.parse(word.fbData.lastQuery);
     }
   }
 }
