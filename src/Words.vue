@@ -1,6 +1,10 @@
 <template>
   <div>
-    <header-component />
+    <header-component 
+      :title="'Let\'s Tango!'"
+      :link="'/add'"
+      :link-label="'Add word'"
+    />
     <word-form 
         :word="filteredWords[0]" 
         v-if="filteredWords.length > 0"
