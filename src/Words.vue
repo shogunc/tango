@@ -12,7 +12,7 @@
     <previous 
       v-if=previousWord 
       :word="previousWord" />
-    <footer-component :numberOfWords="filteredWords.length" />
+    <footer-component :numberOfWords="filteredWords.length === 0 ? 0 : filteredWords.length - 1" />
   </div>
 </template>
 
