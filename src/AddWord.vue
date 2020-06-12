@@ -46,7 +46,8 @@
               @click=goHome>Tillbaka</button>
       <button type="submit" 
               class="btn btn-primary" 
-              @click="submit">Lägg till</button>
+              @click="submit"
+              :disabled="!formValidated">Lägg till</button>
     </div>
   </div>
 </template>
@@ -68,6 +69,11 @@
           streak: 0,
           lastQuery: ''
         }
+      }
+    },
+    computed: {
+      formValidated: function () {
+        return this.word.english !== '' && this.word.englishExample !== '' && this.word.kana !== '' && this.word.japanese !== '' && this.word.japaneseExample !== ''
       }
     },
     methods: {

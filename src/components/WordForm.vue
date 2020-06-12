@@ -1,13 +1,13 @@
 <template>
   <div class="container-fluid py-2" id="next">
-    <div class="field">{{ word.fbData.english }}</div>
+    <div class="field font-weight-bold">{{ word.fbData.english }}</div>
     <div class="field pb-3">{{ word.fbData.englishExample }}</div>
     <div class="form-row align-items-center">
       <div class="col-auto">
         <input type="text" class="form-control mb-2" v-model="textInput">
       </div>
       <div class="col-auto">
-        <button @click="checkResponse(textInput)" class="btn btn-primary mb-2">OK</button>
+        <button @click="checkResponse(textInput)" class="btn btn-primary mb-2" :disabled="textInput === ''">OK</button>
       </div>
     </div>  
   </div>
@@ -35,7 +35,9 @@
 
 <style type="text/css">
   #next {
-    background-color: beige;
+    background-color: khaki;
+    border-top: 2px solid darkkhaki;
+    border-bottom: 2px solid darkkhaki;
   }
   .field {
     padding: 5px 0;
