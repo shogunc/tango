@@ -53,7 +53,7 @@
 </template>
 
 <script>
-  import HeaderComponent from './Components/Header.vue'
+  import HeaderComponent from './components/Header.vue'
   export default {
   	components: {
   	  HeaderComponent
